@@ -1,4 +1,5 @@
 import discord
+import time
 import re
 import registration
 import randomPicker
@@ -28,6 +29,8 @@ class MTBot(discord.Client):
             
         if message.content == '!돌림판':
             chosen = randomPicker.randomPicker(message)
+            await message.reply("3초 후에 공개됩니다!")
+            time.sleep(3)
             await message.reply(f'당첨된 사람은? {chosen}!', mention_author = True)
 
 
