@@ -1,19 +1,23 @@
-from AlcoholGames import *
-import random
+import discord
+from RandomGame import *
 
-def randomGame(people):
-    title = []
-    for key in games:
-        title.append(key)
-    game = random.choice(title)
-    text = '<'+game+'>\n'+games[game] + '\n'
-    text += random.choice(people)+'부터 시작!'
-    return text
+class LMSBot(discord.Client):
+    async def on_ready(self):
+        print(f'Logged in as { self.user } (ID: { self.user.id })')
 
-#people.txt 읽어오기
-f = open("people.txt",'r', encoding='UTF8')
-data = f.read()
-people = data.split(', ')
-a= randomGame(people)
-print(a)
-f.close()
+    async def on_message(self, message):
+        if message.author.id == self.user.id:
+            return
+        
+        if '!술게임' in message.content:
+            reply = randomGame()
+            await message.reply(reply)
+
+
+
+if __name__ == '__main__':
+    token_file = open('token', 'r')
+    token      = token_file.read()
+    token_file.close()
+    client     = LMSBot()
+    client.run(token)
