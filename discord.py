@@ -9,12 +9,12 @@ class LMSBot(discord.Client):
             return
         
         if '!최저가' in message.content:
-            recommend_product(str(message.content).strip('!최저가 '))
-            result = open("recommended_product.txt", 'r')
-            reply = ''
-            for line in result.readlines():
-                reply += line
-            await message.reply(reply, mention_author = False)
+            product = str(message.content).strip('!최저가 ')
+            name, price, fee, link, thumbnail = recommend_product(product)
+            embed = discord.Embed(title=f'{product} 최저가로 사러가기🛍', description=f'상품명: {name}\n판매가: {price}\n배송비: {fee}', color=0x00ff00, url=link)
+            embed.set_thumbnail(url=thumbnail)
+            await message.channel.send(embed=embed)
+
 
 if __name__ == '__main__':
     token_file = open('token', 'r')

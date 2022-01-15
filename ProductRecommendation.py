@@ -4,9 +4,6 @@ from getpass import getuser
 from selenium import webdriver
 
 def recommend_product(product: str):
-    # 사용자 입력 상품
-    #product = open("product.txt", 'r')
-
     # 웹 드라이버 옵션 생성
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
@@ -99,19 +96,8 @@ def recommend_product(product: str):
         cheapest_fee = f'{delivery_fees[total_prices.index(min(total_prices))]}원'
     #cheapest_site = driver.find_element(by='xpath', value=f'/html/body/div/div/div[2]/div[2]/div[2]/div[1]/div/div[2]/div[2]/table/tbody/tr[{total_prices.index(min(total_prices)) + 1}]/td[4]/a').get_attribute('href')
     cheapest_site = driver.find_elements(by='class name', value='productByMall_btn_buy__P4W5Q')[total_prices.index(min(total_prices))].get_attribute('href')
+    driver.implicitly_wait(10)
+    cheapest_thumbnail = driver.find_element(by='xpath', value="//div[@class='image_thumb__20xyr']/img").get_attribute('src')
 
-    # 디스코드로 보낼 결과 메시지
-    result = open("recommended_product.txt", 'w')
-    result.write(
-        f'''
-아래 상품을 추천해요!
-상품명: {cheapest_product_name}
-판매가: {cheapest_price}
-배송비: {cheapest_fee}
-사러가기:
-{cheapest_site}
-        '''
-    )
-    #product.close()
-    result.close()
     driver.quit()
+    return cheapest_product_name, cheapest_price, cheapest_fee, cheapest_site, cheapest_thumbnail
