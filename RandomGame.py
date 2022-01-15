@@ -3,7 +3,7 @@ import random
 
 def randomGame():
     #people.txt 읽어오기
-    f = open("people.txt",'r', encoding='UTF8')
+    f = open("people.txt",'r')
     data = f.read()
     people = data.split(', ')
     f.close()
