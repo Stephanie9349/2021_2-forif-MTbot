@@ -1,4 +1,6 @@
 import discord
+
+from RandomGame import *
 from ProductRecommendation import recommend_product
 class LMSBot(discord.Client):
     async def on_ready(self):
@@ -8,6 +10,10 @@ class LMSBot(discord.Client):
         if message.author.id == self.user.id:
             return
         
+        if '!술게임' in message.content:
+            reply = randomGame()
+            await message.reply(reply)
+
         if '!최저가' in message.content:
             product = str(message.content).strip('!최저가 ')
             name, price, fee, link, thumbnail = recommend_product(product)
