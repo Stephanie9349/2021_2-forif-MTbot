@@ -36,7 +36,7 @@ class MTBot(discord.Client):
 
 if __name__ == '__main__':
     token_file = open('token', 'r')
-    token      = token_file.read()
+    token = token_file.read()
     token_file.close()
-    client     = MTBot()
+    client = MTBot()
     client.run(token)
